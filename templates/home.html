@@ -1,28 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Smart Vehica</title>
+    <meta charset="UTF-8">
+    <title>Smart Vehical Damage Detector</title>
+
     <link rel="stylesheet" href="/static/css/steps.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+
+    <style>
+        :root {
+            --primary: #0a0c18;
+            --secondary: #1e90ff;  /* Sapphire Blue */
+            --bg: #0d0f21;
+            --text: #e8f1ff;
+            --muted: #9fb3d1;
+            --card: #16182b;
+            --radius: 18px;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            text-align: center;
+            padding: 40px 20px;
+             position: relative;
+    z-index: 1;
+        }
+
+        /* ===================== ANIMATED BACKGROUND ===================== */
+
+    .animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;  /* UI click block nahi hoga */
+    z-index: 0;            /* UI content is above this (z-index:1 default) */
+    overflow: visible;     /* Hiding fix */
+}
+
+
+
+/* Spiral Car Animation */
+.car-line {
+    position: absolute;
+    width: 260px;
+    height: 120px;
+    border: 3px solid rgba(200, 113, 8, 0.8);
+    border-radius: 22px;
+    opacity: 0.28;
+
+    /* Light glow */
+    box-shadow:
+        0 0 22px rgba(210, 128, 6, 0.95),
+        0 0 35px rgba(203, 126, 10, 0.65);
+
+    transform: skew(-10deg);
+    animation: spiralMove 9s linear infinite;
+}
+
+/* Headlight */
+.car-line::before {
+    content: "";
+    position: absolute;
+    right: -25px;
+    top: 45%;
+    width: 28px;
+    height: 10px;
+    background: rgb(219, 226, 9);
+    border-radius: 4px;
+    box-shadow: 0 0 22px rgb(104, 154, 178);
+}
+
+/* SPIRAL PATH — full screen spiral */
+@keyframes spiralMove {
+    0% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.3);
+    }
+
+    20% {
+        top: 15%;
+        left: 75%;
+        transform: translate(-50%, -50%) rotate(180deg) scale(0.6);
+    }
+
+    40% {
+        top: 80%;
+        left: 85%;
+        transform: translate(-50%, -50%) rotate(360deg) scale(0.9);
+    }
+
+    60% {
+        top: 85%;
+        left: 20%;
+        transform: translate(-50%, -50%) rotate(540deg) scale(1.2);
+    }
+
+    80% {
+        top: 10%;
+        left: 10%;
+        transform: translate(-50%, -50%) rotate(660deg) scale(1.0);
+    }
+
+    100% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(720deg) scale(0.3);
+    }
+}
+
+        /* ===================== MAIN UI ===================== */
+
+        h1 {
+            color: var(--secondary);
+            font-size: 42px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            line-height: 1.3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .instructions {
+            max-width: 700px;
+            margin: 0 auto 35px auto;
+            padding: 35px;
+            border-radius: var(--radius);
+            background: var(--card);
+            border: 1px solid rgba(30,144,255,0.35);
+            box-shadow: 0 0 25px rgba(30,144,255,0.20);
+            text-align: left;
+        }
+
+        .instructions h3 {
+            font-size: 22px;
+            margin-bottom: 18px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        ul {
+            font-size: 20px;
+            line-height: 1.7;
+        }
+
+        ul li {
+            font-size: 18px;
+            color: var(--muted);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            padding: 16px 45px;
+            font-size: 20px;
+            margin-top: 10px;
+            border-radius: var(--radius);
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(30,144,255,0.45);
+            transition: 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background: #4aa4ff;
+            box-shadow: 0 0 28px rgba(30,144,255,0.7);
+            transform: scale(1.07);
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>🚗 Smart Vehica Damage Detector</h1>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="car-line"></div>
+    </div>
 
-<div class="instructions">
-    <h3>How to Use:</h3>
-    <ul>
-        <li>Step 1: Detect the car type</li>
-        <li>Step 2: Detect damage severity using trained model</li>
-        <li>Step 3: Detect damaged car parts using YOLO</li>
-        <li>Step 4: Estimate repair cost based on severity and damaged parts</li>
-    </ul>
-</div>
+    <h1>🚗 Smart Vehical Damage Detector<br>and Cost Estimator</h1>
 
-<a href="/detect_car">
-    <button class="start-btn">Start →</button>
-</a>
+    <div class="instructions">
+        <h3>How to Use</h3>
+        <ul>
+            <li><b>Step 1:</b> Upload a car image to automatically detect the car type.</li>
+            <li><b>Step 2:</b> The system analyzes the image and predicts damage severity.</li>
+            <li><b>Step 3:</b> YOLO identifies and highlights all damaged car parts.</li>
+            <li><b>Step 4:</b> The system calculates and displays the estimated repair cost.</li>
+        </ul>
+    </div>
+
+    <a href="/detect_car">
+        <button class="start-btn">Start →</button>
+    </a>
 
 </body>
 </html>

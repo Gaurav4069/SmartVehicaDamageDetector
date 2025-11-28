@@ -1,25 +1,158 @@
 {% set step = 4 %}
 {% include "_steps.html" %}
 
-<h2>Step 4: Damage Cost Estimation</h2>
+<!----------------------  SAPPHIRE BLUE PREMIUM UI  ---------------------->
 
-<h3>Car Type:</h3>
-<p>{{ car_type }}</p>
+<style>
+    :root {
+        --primary: #0a0c18;
+        --secondary: #1e90ff;  /* Sapphire Blue */
+        --accent: #e8f1ff;
+        --muted: #9fb3d1;
+        --bg: #0d0f21;
+        --card: #16182b;
+        --radius: 18px;
+        --success: #35e97f;
+    }
 
-<h3>Damage Severity:</h3>
-<p>{{ severity }}</p>
+    body {
+        background: var(--bg);
+        color: var(--accent);
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-<h3>Damaged Parts:</h3>
-<ul>
-    {% for part, count in damaged_parts.items() %}
-        <li>{{ part }} — {{ count }}</li>
-    {% endfor %}
-</ul>
+    .page-wrapper {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+    }
 
-<h2 style="color: green;">Estimated Repair Cost:  
-    ₹ {{ estimated_cost }}
-</h2>
+    h2 {
+        text-align: center;
+        color: var(--secondary);
+        font-size: 30px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
 
-<a href="/">
-    <button class="finish-btn">Finish / Go Home</button>
-</a>
+    /* INFO CARD */
+    .info-card {
+        background: var(--card);
+        padding: 28px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(30,144,255,0.35);
+        box-shadow: 0 0 25px rgba(30,144,255,0.22);
+        margin-bottom: 30px;
+    }
+
+    .info-card h3 {
+        color: var(--secondary);
+        font-size: 20px;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+    }
+
+    .info-card p {
+        font-size: 16px;
+        color: var(--accent);
+        margin-top: 0;
+        margin-bottom: 12px;
+    }
+
+    .info-card ul {
+        padding-left: 15px;
+        margin-top: 10px;
+    }
+
+    .info-card ul li {
+        background: #111628;
+        margin-bottom: 10px;
+        padding: 10px 14px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(30,144,255,0.30);
+        color: var(--muted);
+        transition: 0.25s ease;
+        box-shadow: 0 0 14px rgba(30,144,255,0.12);
+    }
+
+    .info-card ul li:hover {
+        border-color: var(--secondary);
+        color: var(--accent);
+        transform: translateY(-3px);
+        box-shadow: 0 0 18px rgba(30,144,255,0.30);
+    }
+
+    /* COST BOX */
+    .cost-box {
+        margin-top: 25px;
+        padding: 25px;
+        background: rgba(0, 50, 90, 0.25);
+        border-left: 6px solid var(--success);
+        border-radius: var(--radius);
+        text-align: center;
+        box-shadow: 0 0 22px rgba(53, 233, 127, 0.28);
+        backdrop-filter: blur(6px);
+    }
+
+    .cost-box h2 {
+        color: var(--success);
+        margin: 0;
+        font-size: 28px;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 10px rgba(53, 233, 127, 0.5);
+    }
+
+    /* FINISH BUTTON */
+    .finish-btn {
+        display: block;
+        margin: 35px auto 0 auto;
+        padding: 14px 40px;
+        font-size: 18px;
+        border-radius: var(--radius);
+        border: none;
+        background: var(--secondary);
+        color: white;
+        cursor: pointer;
+        letter-spacing: 1px;
+        transition: 0.3s ease;
+    }
+
+    .finish-btn:hover {
+        background: #4aa4ff;
+        transform: scale(1.07);
+        box-shadow: 0 0 22px rgba(30,144,255,0.55);
+    }
+
+</style>
+
+<div class="page-wrapper">
+
+    <h2>Step 4 • Damage Cost Estimation</h2>
+
+    <div class="info-card">
+        <h3>Car Type:</h3>
+        <p>{{ car_type }}</p>
+
+        <h3>Damage Severity:</h3>
+        <p>{{ severity }}</p>
+
+        <h3>Damaged Parts:</h3>
+        <ul>
+            {% for part, count in damaged_parts.items() %}
+                <li>{{ part }} — {{ count }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="cost-box">
+        <h2>Estimated Repair Cost: ₹ {{ estimated_cost }}</h2>
+    </div>
+
+    <a href="/">
+        <button class="finish-btn">Finish / Go Home</button>
+    </a>
+
+</div>

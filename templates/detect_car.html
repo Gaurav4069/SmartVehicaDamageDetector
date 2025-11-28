@@ -1,18 +1,150 @@
 {% set step = 1 %}
 {% include "_steps.html" %}
 
-<h2>Step 1: Car Type Detection</h2>
+<!----------------------  SAPPHIRE BLUE PREMIUM UI  ---------------------->
 
-<form action="/predict_car" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image" required>
-    <button>Detect</button>
-</form>
+<style>
+    :root {
+        --primary: #0a0c18;
+        --secondary: #1e90ff;
+        --accent: #e8f1ff;
+        --muted: #9fb3d1;
+        --bg: #0d0f21;
+        --card: #16182b;
+        --radius: 18px;
+    }
 
-{% if car_type %}
-    <img src="/{{ image_path }}" width="350">
-    <h3>Detected: {{ car_type }}</h3>
+    body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--accent);
+        margin: 0;
+        padding: 0;
+    }
 
-    <a href="/severity">
-        <button class="next-btn">Next Step →</button>
-    </a>
-{% endif %}
+    .page-wrapper {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: var(--secondary);
+        font-size: 30px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .upload-card {
+        padding: 32px;
+        background: var(--card);
+        border-radius: var(--radius);
+        border: 1px solid rgba(30,144,255,0.35);
+        box-shadow: 0 0 25px rgba(30,144,255,0.22);
+        text-align: center;
+    }
+
+    input[type="file"] {
+        background: var(--primary);
+        border: 2px solid var(--secondary);
+        border-radius: var(--radius);
+        padding: 14px;
+        width: 100%;
+        color: var(--accent);
+        font-size: 15px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+    #preview-img {
+        width: 350px;
+        display: none;
+        margin: 15px auto 0 auto;
+        border-radius: var(--radius);
+        border: 2px solid var(--secondary);
+        box-shadow: 0 0 22px rgba(30,144,255,0.35);
+    }
+
+    button {
+        padding: 12px 32px;
+        border-radius: var(--radius);
+        background: var(--secondary);
+        border: none;
+        color: #fff;
+        font-size: 17px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        transition: 0.25s;
+    }
+
+    button:hover {
+        background: #4aa4ff;
+        box-shadow: 0 0 16px rgba(30,144,255,0.45);
+        transform: scale(1.05);
+    }
+
+    .result-section {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .next-btn {
+        padding: 12px 38px;
+        background: var(--secondary);
+        border-radius: var(--radius);
+        color: white;
+        font-size: 18px;
+        border: none;
+        transition: 0.25s ease;
+    }
+
+    .next-btn:hover {
+        background: #4aa4ff;
+        transform: scale(1.07);
+        box-shadow: 0 0 20px rgba(30,144,255,0.55);
+    }
+</style>
+
+<div class="page-wrapper">
+
+    <h2>Step 1 • Car Type Detection</h2>
+
+    <div class="upload-card">
+        <form action="/predict_car" method="POST" enctype="multipart/form-data">
+            
+            <!-- File Input -->
+            <input type="file" name="image" id="imageInput" required>
+
+            <!-- Live Image Preview -->
+            <img id="preview-img" alt="Preview will appear here">
+
+            <button type="submit">Detect</button>
+        </form>
+    </div>
+
+    {% if car_type %}
+    <div class="result-section">
+        <img src="/{{ image_path }}" alt="Car Input">
+        <h3>Detected: {{ car_type }}</h3>
+
+        <a href="/severity">
+            <button class="next-btn">Next Step →</button>
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- Live Image Preview Script -->
+<script>
+    document.getElementById("imageInput").addEventListener("change", function(event) {
+        let file = event.target.files[0];
+        if (file) {
+            let imgPreview = document.getElementById("preview-img");
+            imgPreview.src = URL.createObjectURL(file);
+            imgPreview.style.display = "block";
+        }
+    });
+</script>

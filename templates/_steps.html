@@ -1,14 +1,33 @@
 <link rel="stylesheet" href="/static/css/steps.css">
 
-<div class="wizard">
-    <div class="step {{ 'active' if step >= 1 else '' }}">1</div>
+<div class="wizard-wrapper">
+  <div class="wizard-title">Damage Detection Progress</div>
+
+  <div class="wizard">
+    <div class="step {{ 'active' if step >= 1 else '' }}">
+      <span class="step-number">1</span>
+      <span class="step-label">Upload</span>
+    </div>
+
     <div class="line {{ 'active' if step >= 2 else '' }}"></div>
 
-    <div class="step {{ 'active' if step >= 2 else '' }}">2</div>
+    <div class="step {{ 'active' if step >= 2 else '' }}">
+      <span class="step-number">2</span>
+      <span class="step-label">Analysis</span>
+    </div>
+
     <div class="line {{ 'active' if step >= 3 else '' }}"></div>
 
-    <div class="step {{ 'active' if step >= 3 else '' }}">3</div>
+    <div class="step {{ 'active' if step >= 3 else '' }}">
+      <span class="step-number">3</span>
+      <span class="step-label">Result</span>
+    </div>
+
     <div class="line {{ 'active' if step >= 4 else '' }}"></div>
 
-    <div class="step {{ 'active' if step >= 4 else '' }}">4</div>
+    <div class="step {{ 'active' if step >= 4 else '' }}">
+      <span class="step-number">4</span>
+      <span class="step-label">Report</span>
+    </div>
+  </div>
 </div>

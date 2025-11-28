@@ -81,7 +81,7 @@ class DamageExtractorAPI:
             print("❌ Could not load image.")
             return
 
-        YELLOW = (0, 255, 255)
+        RED = (0, 0, 255)
         TEXT_COLOR = (0, 0, 0)
 
         for pred in predictions:
@@ -99,12 +99,12 @@ class DamageExtractorAPI:
             y2 = int(y + h / 2)
 
             # Draw yellow bounding box
-            cv2.rectangle(img, (x1, y1), (x2, y2), YELLOW, 3)
+            cv2.rectangle(img, (x1, y1), (x2, y2), RED, 2)
 
             label = f"{cls} ({conf:.2f})"
             font = cv2.FONT_HERSHEY_SIMPLEX
-            font_scale = 0.7
-            thick = 2
+            font_scale = 0.3
+            thick = 1
 
             # Text size (to draw background)
             (tw, th), _ = cv2.getTextSize(label, font, font_scale, thick)
@@ -114,7 +114,7 @@ class DamageExtractorAPI:
                 img,
                 (x1, y1 - th - 10),
                 (x1 + tw + 10, y1),
-                YELLOW,
+                RED,
                 cv2.FILLED
             )
 

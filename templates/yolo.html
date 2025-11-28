@@ -1,28 +1,201 @@
 {% set step = 3 %}
 {% include "_steps.html" %}
 
-<h2>Step 3: YOLO Damage Detection</h2>
+<!----------------------  SAPPHIRE BLUE PREMIUM UI  ---------------------->
 
-<form action="/predict_yolo" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image" required>
-    <button>Detect</button>
-</form>
+<style>
+    :root {
+        --primary: #0a0c18;
+        --secondary: #1e90ff;  /* Sapphire Blue */
+        --accent: #e8f1ff;
+        --muted: #9fb3d1;
+        --bg: #0d0f21;
+        --card: #16182b;
+        --radius: 18px;
+    }
 
-{% if image_path %}
-    <img src="/{{ image_path }}" width="400">
+    body {
+        background: var(--bg);
+        color: var(--accent);
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-    <h3>Severity (YOLO): {{ severity }}</h3>
+    .page-wrapper {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+    }
 
-    <h3>Damaged Parts:</h3>
-    <ul>
-        {% for part, count in damaged_parts.items() %}
-            <li>{{ part }} — {{ count }}</li>
-        {% endfor %}
-    </ul>
+    h2 {
+        text-align: center;
+        color: var(--secondary);
+        font-size: 30px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
 
-    <!-- NEXT BUTTON TO COST ESTIMATION -->
-    <a href="/cost?car_type={{car_type}}&severity={{severity}}&damaged_parts={{damaged_parts_json}}">
-        <button class="next-btn">Next → Cost Estimation</button>
-    </a>
+    .upload-card {
+        background: var(--card);
+        padding: 32px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(30,144,255,0.35);
+        box-shadow: 0 0 25px rgba(30,144,255,0.22);
+        text-align: center;
+    }
 
-{% endif %}
+    input[type="file"] {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 20px;
+        border-radius: var(--radius);
+        background: var(--primary);
+        border: 2px solid var(--secondary);
+        color: var(--accent);
+        cursor: pointer;
+    }
+
+    /* PREVIEW IMAGE */
+    #preview-img {
+        width: 400px;
+        display: none;
+        margin: 15px auto;
+        border-radius: var(--radius);
+        border: 2px solid var(--secondary);
+        box-shadow: 0 0 22px rgba(30,144,255,0.35);
+    }
+
+    button {
+        padding: 12px 32px;
+        border-radius: var(--radius);
+        border: none;
+        background: var(--secondary);
+        color: white;
+        font-size: 17px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        transition: 0.25s ease;
+    }
+
+    button:hover {
+        background: #4aa4ff;
+        transform: scale(1.05);
+        box-shadow: 0 0 16px rgba(30,144,255,0.45);
+    }
+
+    .result-section {
+        margin-top: 35px;
+        text-align: center;
+    }
+
+    .result-section img {
+        width: 400px;
+        border-radius: var(--radius);
+        border: 2px solid var(--secondary);
+        margin-bottom: 15px;
+        box-shadow: 0 0 22px rgba(30,144,255,0.35);
+    }
+
+    .result-section h3 {
+        color: var(--accent);
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    ul li {
+        background: var(--card);
+        border: 1px solid rgba(30,144,255,0.35);
+        padding: 10px 16px;
+        margin: 8px auto;
+        width: 60%;
+        border-radius: var(--radius);
+        color: var(--muted);
+        font-size: 16px;
+        box-shadow: 0 0 12px rgba(30,144,255,0.20);
+        transition: 0.25s;
+    }
+
+    ul li:hover {
+        border-color: var(--secondary);
+        color: var(--accent);
+        transform: translateY(-3px);
+        box-shadow: 0 0 18px rgba(30,144,255,0.30);
+    }
+
+    .next-btn {
+        padding: 12px 38px;
+        background: var(--secondary);
+        border-radius: var(--radius);
+        color: white;
+        font-size: 18px;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .next-btn:hover {
+        background: #4aa4ff;
+        transform: scale(1.07);
+        box-shadow: 0 0 20px rgba(30,144,255,0.55);
+    }
+</style>
+
+
+<div class="page-wrapper">
+
+    <h2>Step 3 • YOLO Damage Detection</h2>
+
+    <div class="upload-card">
+        <form action="/predict_yolo" method="POST" enctype="multipart/form-data">
+
+            <input type="file" name="image" id="imageInput" required>
+
+            <!-- Image Preview -->
+            <img id="preview-img" alt="Selected Image Preview">
+
+            <button type="submit">Detect</button>
+        </form>
+    </div>
+
+    {% if image_path %}
+    <div class="result-section">
+
+        <img src="/{{ image_path }}" alt="YOLO Output">
+
+        <h3>Severity (YOLO): {{ severity }}</h3>
+
+        <h3>Detected Damaged Parts</h3>
+        <ul>
+            {% for part, count in damaged_parts.items() %}
+                <li>{{ part }} — {{ count }}</li>
+            {% endfor %}
+        </ul>
+
+        <a href="/cost?car_type={{car_type}}&severity={{severity}}&damaged_parts={{damaged_parts_json}}">
+            <button class="next-btn">Next → Cost Estimation</button>
+        </a>
+
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- Live Preview Script -->
+<script>
+    document.getElementById("imageInput").addEventListener("change", function(event) {
+        let file = event.target.files[0];
+        if (file) {
+            let preview = document.getElementById("preview-img");
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+        }
+    });
+</script>

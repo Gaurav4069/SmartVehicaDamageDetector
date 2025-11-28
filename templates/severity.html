@@ -1,18 +1,168 @@
 {% set step = 2 %}
 {% include "_steps.html" %}
 
-<h2>Step 2: Damage Severity Classification</h2>
+<!----------------------  SAPPHIRE BLUE PREMIUM UI  ---------------------->
 
-<form action="/predict_severity" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image" required>
-    <button>Predict</button>
-</form>
+<style>
+    :root {
+        --primary: #0a0c18;
+        --secondary: #1e90ff;
+        --accent: #e8f1ff;
+        --muted: #9fb3d1;
+        --bg: #0d0f21;
+        --card: #16182b;
+        --radius: 18px;
+    }
 
-{% if severity %}
-    <img src="/{{ image_path }}" width="350">
-    <h3>Severity: {{ severity }}</h3>
+    body {
+        background: var(--bg);
+        color: var(--accent);
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-    <a href="/yolo">
-        <button class="next-btn">Next Step →</button>
-    </a>
-{% endif %}
+    .page-wrapper {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        color: var(--secondary);
+        font-size: 30px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .upload-card {
+        background: var(--card);
+        padding: 32px;
+        border-radius: var(--radius);
+        border: 1px solid rgba(30,144,255,0.35);
+        box-shadow: 0 0 25px rgba(30,144,255,0.22);
+        text-align: center;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 20px;
+        border-radius: var(--radius);
+        background: var(--primary);
+        border: 2px solid var(--secondary);
+        color: var(--accent);
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    #preview-img {
+        width: 350px;
+        display: none;
+        margin: 15px auto 20px auto;
+        border-radius: var(--radius);
+        border: 2px solid var(--secondary);
+        box-shadow: 0 0 22px rgba(30,144,255,0.35);
+    }
+
+    button {
+        padding: 12px 32px;
+        border-radius: var(--radius);
+        border: none;
+        background: var(--secondary);
+        color: white;
+        font-size: 17px;
+        cursor: pointer;
+        letter-spacing: 1px;
+        transition: 0.25s ease;
+    }
+
+    button:hover {
+        background: #4aa4ff;
+        transform: scale(1.05);
+        box-shadow: 0 0 16px rgba(30,144,255,0.45);
+    }
+
+    .result-section {
+        margin-top: 32px;
+        text-align: center;
+    }
+
+    .result-section img {
+        width: 350px;
+        border-radius: var(--radius);
+        border: 2px solid var(--secondary);
+        margin-bottom: 12px;
+        box-shadow: 0 0 22px rgba(30,144,255,0.35);
+    }
+
+    .result-section h3 {
+        font-size: 22px;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .next-btn {
+        padding: 12px 38px;
+        border-radius: var(--radius);
+        background: var(--secondary);
+        color: white;
+        border: none;
+        font-size: 18px;
+        transition: 0.25s ease;
+    }
+
+    .next-btn:hover {
+        background: #4aa4ff;
+        box-shadow: 0 0 18px rgba(30,144,255,0.55);
+        transform: scale(1.07);
+    }
+</style>
+
+<div class="page-wrapper">
+
+    <h2>Step 2 • Damage Severity Classification</h2>
+
+    <div class="upload-card">
+        <form action="/predict_severity" method="POST" enctype="multipart/form-data">
+
+            <!-- File Input -->
+            <input type="file" name="image" id="imageInput" required>
+
+            <!-- Preview Image -->
+            <img id="preview-img" alt="Selected Image Preview">
+
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+
+    {% if severity %}
+    <div class="result-section">
+
+        <img src="/{{ image_path }}" alt="Damage Image">
+
+        <h3>Severity: {{ severity }}</h3>
+
+        <a href="/yolo">
+            <button class="next-btn">Next Step →</button>
+        </a>
+
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- Image Preview Script -->
+<script>
+    document.getElementById("imageInput").addEventListener("change", function(e) {
+        let file = e.target.files[0];
+        if (file) {
+            let preview = document.getElementById("preview-img");
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+        }
+    });
+</script>
