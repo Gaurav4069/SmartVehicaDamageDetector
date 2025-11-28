@@ -98,7 +98,7 @@ Every step is automated and visually represented in the UI.
 
 *****How to use this project******
 1️⃣ Clone the repository
-git clone https://github.com/Gaurav4069/SmartVehicaDamageDetector
+git clone https://github.com/Gaurav4069/SmartVehicalDamageDetector
 cd SmartVehicaDamageDetector
 
 2️⃣ Create virtual environment
