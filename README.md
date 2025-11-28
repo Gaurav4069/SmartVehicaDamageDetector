@@ -1,4 +1,4 @@
-Smart Vehical — AI Based Car Damage Detection & Repair Cost Estimator
+*****Smart Vehical — AI Based Car Damage Detection & Repair Cost Estimator*****
 Deep Learning • YOLOv8 • Flask Web App
 
 Smart Vehical is an AI-powered automated car inspection system designed to analyze car damage from a single uploaded image.
