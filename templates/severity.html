@@ -1,0 +1,18 @@
+{% set step = 2 %}
+{% include "_steps.html" %}
+
+<h2>Step 2: Damage Severity Classification</h2>
+
+<form action="/predict_severity" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <button>Predict</button>
+</form>
+
+{% if severity %}
+    <img src="/{{ image_path }}" width="350">
+    <h3>Severity: {{ severity }}</h3>
+
+    <a href="/yolo">
+        <button class="next-btn">Next Step →</button>
+    </a>
+{% endif %}

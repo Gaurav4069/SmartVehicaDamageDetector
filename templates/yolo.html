@@ -1,0 +1,28 @@
+{% set step = 3 %}
+{% include "_steps.html" %}
+
+<h2>Step 3: YOLO Damage Detection</h2>
+
+<form action="/predict_yolo" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <button>Detect</button>
+</form>
+
+{% if image_path %}
+    <img src="/{{ image_path }}" width="400">
+
+    <h3>Severity (YOLO): {{ severity }}</h3>
+
+    <h3>Damaged Parts:</h3>
+    <ul>
+        {% for part, count in damaged_parts.items() %}
+            <li>{{ part }} — {{ count }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- NEXT BUTTON TO COST ESTIMATION -->
+    <a href="/cost?car_type={{car_type}}&severity={{severity}}&damaged_parts={{damaged_parts_json}}">
+        <button class="next-btn">Next → Cost Estimation</button>
+    </a>
+
+{% endif %}

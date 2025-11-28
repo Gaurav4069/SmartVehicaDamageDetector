@@ -1,0 +1,25 @@
+{% set step = 4 %}
+{% include "_steps.html" %}
+
+<h2>Step 4: Damage Cost Estimation</h2>
+
+<h3>Car Type:</h3>
+<p>{{ car_type }}</p>
+
+<h3>Damage Severity:</h3>
+<p>{{ severity }}</p>
+
+<h3>Damaged Parts:</h3>
+<ul>
+    {% for part, count in damaged_parts.items() %}
+        <li>{{ part }} — {{ count }}</li>
+    {% endfor %}
+</ul>
+
+<h2 style="color: green;">Estimated Repair Cost:  
+    ₹ {{ estimated_cost }}
+</h2>
+
+<a href="/">
+    <button class="finish-btn">Finish / Go Home</button>
+</a>

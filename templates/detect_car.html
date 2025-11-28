@@ -1,0 +1,18 @@
+{% set step = 1 %}
+{% include "_steps.html" %}
+
+<h2>Step 1: Car Type Detection</h2>
+
+<form action="/predict_car" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <button>Detect</button>
+</form>
+
+{% if car_type %}
+    <img src="/{{ image_path }}" width="350">
+    <h3>Detected: {{ car_type }}</h3>
+
+    <a href="/severity">
+        <button class="next-btn">Next Step →</button>
+    </a>
+{% endif %}

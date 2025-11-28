@@ -1,0 +1,41 @@
+.wizard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25px 0;
+}
+
+.step {
+    width: 45px;
+    height: 45px;
+    background: #ddd;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    border: 3px solid #bbb;
+    transition: 0.3s ease;
+}
+
+.step.active {
+    background: #2ecc71;
+    color: white;
+    border-color: #27ae60;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+.line {
+    width: 80px;
+    height: 4px;
+    background: #ccc;
+    margin: 0 10px;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.line.active {
+    background: #2ecc71;
+    box-shadow: 0 0 10px #2ecc71;
+}

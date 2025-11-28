@@ -74,12 +74,15 @@ class DamageExtractorAPI:
     # ----------------------------------------------------
     # Bounding Box Visualization
     # ----------------------------------------------------
-    def visualize(self, image_path, predictions, save_path="output.jpg"):
+    def visualize(self, image_path, predictions, save_path="static/output.jpg"):
         img = cv2.imread(image_path)
 
         if img is None:
             print("❌ Could not load image.")
             return
+
+        YELLOW = (0, 255, 255)
+        TEXT_COLOR = (0, 0, 0)
 
         for pred in predictions:
             x = pred["x"]
@@ -89,31 +92,47 @@ class DamageExtractorAPI:
             cls = pred["class"]
             conf = pred["confidence"]
 
-            # YOLO center format -> convert to corners
+            # YOLO center format → corner coords
             x1 = int(x - w / 2)
             y1 = int(y - h / 2)
             x2 = int(x + w / 2)
             y2 = int(y + h / 2)
 
-            color = (
-                random.randint(50, 255),
-                random.randint(50, 255),
-                random.randint(50, 255)
-            )
-
-            cv2.rectangle(img, (x1, y1), (x2, y2), color, 3)
+            # Draw yellow bounding box
+            cv2.rectangle(img, (x1, y1), (x2, y2), YELLOW, 3)
 
             label = f"{cls} ({conf:.2f})"
-            cv2.putText(
-                img, label,
-                (x1, y1 - 10),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7, color, 2
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            font_scale = 0.7
+            thick = 2
+
+            # Text size (to draw background)
+            (tw, th), _ = cv2.getTextSize(label, font, font_scale, thick)
+
+            # Label background
+            cv2.rectangle(
+                img,
+                (x1, y1 - th - 10),
+                (x1 + tw + 10, y1),
+                YELLOW,
+                cv2.FILLED
             )
 
+            # Black label text
+            cv2.putText(
+                img,
+                label,
+                (x1 + 5, y1 - 5),
+                font,
+                font_scale,
+                TEXT_COLOR,
+                thick
+            )
+
+        # ----------------------------
+        # SAVE ONLY — NO POPUP WINDOW
+        # ----------------------------
         cv2.imwrite(save_path, img)
-        cv2.imshow("Detections", img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
 
         print("✔ Saved visualization to:", save_path)
+
